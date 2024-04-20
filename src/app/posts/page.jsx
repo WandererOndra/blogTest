@@ -1,0 +1,66 @@
+import { getAllArticles } from "@/app/lib/api";
+import Image from "next/image";
+import Link from "next/link";
+
+export default async function Posts() {
+  const articles = await getAllArticles();
+
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between">
+      <section className="w-full">
+        <div className="mx-auto container space-y-12 px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h2>
+                Feel free to browse
+              </h2>
+              <p className="max-w-[900px] text-zinc-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Discover our latest blog posts.
+              </p>
+            </div>
+          </div>
+          <div className="space-y-12">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {articles.map((article) => (
+                  <article key={article.sys.id} className="h-full flex flex-col rounded-lg bg-white shadow-lg overflow-hidden">
+                    <Image
+                      alt="placeholder"
+                      className="aspect-[4/3] object-cover w-full"
+                      height="263"
+                      src={article.articleImage.url}
+                      width="350"
+                      priority={true}
+                    />
+                    <div className="flex-1 p-6">
+                      <Link href={`/articles/${article.slug}`}>
+                        <h3 className="text-2xl font-bold leading-tight text-primary py-4">
+                          {article.title}
+                        </h3>
+                      </Link>
+                      <div className="inline-block rounded-full bg-zinc-100 px-3 py-1 text-sm font-semibold text-zinc-800">
+                        {article.categoryName}
+                      </div>
+                      <p className="max-w-none text-zinc-500 mt-4 mb-2 text-sm">
+                        {article.summary}
+                      </p>
+                      <p className="max-w-none text-zinc-600 mt-2 mb-2 text-sm font-bold">
+                        Written by: {article.authorName}
+                      </p>
+                      <div className="flex justify-end">
+                        <Link
+                          className="inline-flex h-10 items-center justify-center text-sm font-medium"
+                          href={`/articles/${article.slug}`}
+                        >
+                          Read More →
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
