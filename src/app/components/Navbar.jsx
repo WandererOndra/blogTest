@@ -13,7 +13,7 @@ export default function Navbar() {
           quality={100}
           placeholder='blur'
         />
-        <h1 className='flex-none'>Ondy's Blog</h1>
+        <h1 className='flex-none'>Ondys Blog</h1>
         </div>
         <div className="flex items-center space-x-4">
         <Link href="/">Home</Link>
